@@ -99,8 +99,8 @@ with tab1:
                                         allocator=ut.drawdown_allocation, 
                                         max_drawdown=max_drawdown, multiplier=multiplier, 
                                         momentum_window=momentum_window)
-                dd_market = ut.drawdown(real_market['monthly_return'])
-                dd_maxdd = ut.drawdown(returns_maxdd['monthly_return'])
+                dd_market = ut.drawdown(real_market['monthly_return'], starting_wealth=start)
+                dd_maxdd = ut.drawdown(returns_maxdd['monthly_return'], starting_wealth=start)
                 fig = go.Figure()
                 fig.add_trace(go.Scatter(x=dd_market.index, y=dd_market["Wealth"], mode="lines", line=dict(color="goldenrod"), name="Market Wealth"))
                 fig.add_trace(go.Scatter(x=dd_market.index, y=dd_market["Peaks"], mode="lines", line=dict(color="goldenrod", dash="dot"), name="Market Peaks"))
@@ -126,7 +126,7 @@ with tab1:
                                             allocator=ut.floor_allocation, floor=floor, 
                                             zc_prices=cir_zc_prices[1:], 
                                             multiplier=multiplier)
-                tv_floor = ut.terminal_values(returns_floor)
+                tv_floor = start * ut.terminal_values(returns_floor)
                 sns.histplot(tv_floor, kde=True, stat="density", color="red", label=f"{floor*100}% floor", bins=100)
                 plt.axvline(tv_floor.mean(), ls="--", color="red")
             if "Max Drawdown Allocation" in allocation_strategy:
@@ -137,7 +137,7 @@ with tab1:
                                         allocator=ut.drawdown_allocation, 
                                         max_drawdown=max_drawdown, multiplier=multiplier, 
                                         momentum_window=momentum_window)
-                tv_maxdd = ut.terminal_values(sim_returns_maxdd)
+                tv_maxdd = start * ut.terminal_values(sim_returns_maxdd)
                 sns.histplot(tv_maxdd, kde=True, stat="density", color="blue", label=f"{max_drawdown*100}% max drawdown", bins=100)
                 plt.axvline(tv_maxdd.mean(), ls="--", color="blue")
             plt.legend()
