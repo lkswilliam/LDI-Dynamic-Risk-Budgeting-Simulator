@@ -224,7 +224,7 @@ with tab3:
         else:
             st.error("No allocation strategy selected.")
         if "Floor Allocation" in allocation_strategy:
-            st.write('Summary Statistics of Terminal Values for Floor Allocation')
+            st.write('Summary Statistics of Terminal Values for Floor Allocation (calculated per $1 invested, multiply by your initial wealth for absolute values)')
             st.write(sim_floor_ter.T)
     else:
         st.write("No data to show...sth went wrong.")
